@@ -6,37 +6,43 @@ package com.zolbayar.cracking_the_oyster.object_oriented_design;
             the call is escalated to a manager and so on to the director.
 
     Insight: Don't make it so simple
-
+            CallHandler and Call classes were necessary. And the Rank enum too.
+            Call should be placed on the call handler. Then it should've queue the current employees by the rank
  */
 
 import java.util.ArrayList;
+import java.util.List;
 
 public class CallCenter {
 
-    private ArrayList<Responder> responders;
-    private ArrayList<Manager> managers;
-    private ArrayList<Director> directors;
+    class CallHandler {
 
-    public void dispatchCall(){
-        boolean isCustomerServed = false;
-
-        isCustomerServed = serveCustomer(responders);
+        // Employee queue with rank.
+        // 0 - responder, 1 - manager, 2 - director
+        List<List<Employee>> employeeQueue;
+        List<List<Call>> callQueue;
 
 
     }
 
-    private boolean serveCustomer(ArrayList<Employee> employees){
-        boolean isServed = false;
+    enum Rank {
+        RESPONDER, MANAGER, DIRECTOR
+    }
 
-        for(Employee employee : employees){
-            if(employee.isAvailable()){
-                employee.serveCustomer();
-                employee.makeUnavailable();
-                isServed = true;
-            }
+    class Call {
+        private Rank rank;
+        private Employee handler;
+
+        public void setHandler(Employee employee){
+            this.handler = employee;
+            employee.makeUnavailable();
         }
 
-        return isServed;
+        private String reply;
+
+        public void makeReply(String reply){
+            this.reply = reply;
+        }
     }
 
     abstract class Employee {
