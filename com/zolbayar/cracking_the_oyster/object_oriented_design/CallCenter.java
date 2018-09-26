@@ -22,7 +22,18 @@ public class CallCenter {
         List<List<Employee>> employeeQueue;
         List<List<Call>> callQueue;
 
+        private Employee getAvailableEmployee(){
+            for(List<Employee> employeeList : employeeQueue){
+                for(Employee employee : employeeList){
+                    if(employee.isAvailable()){
+                        return employee;
+                    }
+                }
+            }
+            return null;
+        }
 
+        
     }
 
     enum Rank {
