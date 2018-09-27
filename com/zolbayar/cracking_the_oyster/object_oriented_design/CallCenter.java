@@ -22,6 +22,11 @@ public class CallCenter {
         List<List<Employee>> employeeQueue;
         List<List<Call>> callQueue;
 
+        public CallHandler(List<List<Employee>> employeeQueue, List<List<Call>> callQueue) {
+            this.employeeQueue = employeeQueue;
+            this.callQueue = callQueue;
+        }
+
         private Employee getAvailableEmployee(){
             for(List<Employee> employeeList : employeeQueue){
                 for(Employee employee : employeeList){
@@ -33,6 +38,24 @@ public class CallCenter {
             return null;
         }
 
+        private void handleCall(Call call){
+           Employee employee = getAvailableEmployee();
+           if(employee != null){
+               call.setHandler(employee);
+           }else{
+               call.makeReply("Sorry, no one is available to answer you.");
+           }
+        }
+
+        public void receiveCalls(){
+            for(List<Call> callList : callQueue){
+                for(Call call : callList){
+                    if(call.getHandler() == null){
+                        handleCall(call);
+                    }
+                }
+            }
+        }
         
     }
 
@@ -44,14 +67,18 @@ public class CallCenter {
         private Rank rank;
         private Employee handler;
 
-        public void setHandler(Employee employee){
+        void setHandler(Employee employee){
             this.handler = employee;
             employee.makeUnavailable();
         }
 
+        Employee getHandler() {
+            return handler;
+        }
+
         private String reply;
 
-        public void makeReply(String reply){
+        void makeReply(String reply){
             this.reply = reply;
         }
     }
