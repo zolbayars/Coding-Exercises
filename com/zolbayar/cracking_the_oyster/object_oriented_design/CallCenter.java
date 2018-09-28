@@ -6,16 +6,23 @@ package com.zolbayar.cracking_the_oyster.object_oriented_design;
             the call is escalated to a manager and so on to the director.
 
     Insight: Don't make it so simple
-            CallHandler and Call classes were necessary. And the Rank enum too.
-            Call should be placed on the call handler. Then it should've queue the current employees by the rank
+            - CallHandler and Call classes were necessary. And the Rank enum too.
+            - Call should be placed on the call handler. Then it should've queue the current employees by the rank
+            - assign values for levels of employees and number of respondents
+            - the call queue should be created from a new call (which comes from dispatchCall method)
  */
 
-import java.util.ArrayList;
 import java.util.List;
 
 public class CallCenter {
 
     class CallHandler {
+
+        private final int LEVELS = 3;
+
+        private final int RESPONDENTS = 10;
+        private final int MANAGERS = 3;
+        private final int DIRECTORS = 2;
 
         // Employee queue with rank.
         // 0 - responder, 1 - manager, 2 - director
@@ -38,42 +45,58 @@ public class CallCenter {
             return null;
         }
 
-        private void handleCall(Call call){
-           Employee employee = getAvailableEmployee();
-           if(employee != null){
-               call.setHandler(employee);
-           }else{
-               call.makeReply("Sorry, no one is available to answer you.");
-           }
+        public void receiveCalls(Caller caller){
+            Call call = new Call(caller);
+            dispatchCall(call);
         }
 
-        public void receiveCalls(){
-            for(List<Call> callList : callQueue){
-                for(Call call : callList){
-                    if(call.getHandler() == null){
-                        handleCall(call);
-                    }
-                }
+        private void dispatchCall(Call call){
+            Employee employee = getAvailableEmployee();
+            if(employee != null){
+                call.setHandler(employee);
+                employee.makeUnavailable();
+            }else{
+                call.makeReply("Please wait for a minute.");
+                callQueue.get(call.getRank().getValue()).add(call);
             }
         }
-        
+
     }
 
     enum Rank {
-        RESPONDER, MANAGER, DIRECTOR
+        RESPONDER(0), MANAGER(1), DIRECTOR(2);
+
+        private int id;
+        Rank(int id) {
+            this.id = id;
+        }
+
+        public int getValue(){
+            return this.id;
+        }
     }
 
     class Call {
         private Rank rank;
         private Employee handler;
+        private Caller caller;
+
+        public Call(Caller caller) {
+            this.caller = caller;
+            rank = Rank.RESPONDER;
+        }
 
         void setHandler(Employee employee){
             this.handler = employee;
-            employee.makeUnavailable();
+            employee.serveCustomer();
         }
 
         Employee getHandler() {
             return handler;
+        }
+
+        public Rank getRank() {
+            return rank;
         }
 
         private String reply;
@@ -81,6 +104,11 @@ public class CallCenter {
         void makeReply(String reply){
             this.reply = reply;
         }
+    }
+
+    // A person who is calling
+    class Caller{
+
     }
 
     abstract class Employee {
