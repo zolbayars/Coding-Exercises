@@ -9,6 +9,8 @@ package com.zolbayar.cracking_the_oyster.object_oriented_design;
         Coin is the trigger for starting a playlist.
     4. Actions: Playlist should play songs, MusicPlayer should receive coin and start the playlist, Person
         should put the coin into the MusicPlayer
+
+    Insight: - The main Jukebox class could've been the body of the problem which channels all the operations on it.
  */
 
 import java.util.ArrayList;
