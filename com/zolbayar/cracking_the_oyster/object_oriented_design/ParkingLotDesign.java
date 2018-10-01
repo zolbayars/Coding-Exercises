@@ -3,78 +3,89 @@ package com.zolbayar.cracking_the_oyster.object_oriented_design;
 /*
     Purpose: Design a parking lot with object oriented principles
 
-    Insight:
+    Insight: Don't just make simple assumptions.
+        - Core classes could've been these: Vehicle, Bus, Motorcycle, Car, ParkingLot, Level, ParkingSpot
+        - Vehicle is an abstract parent for vehicle types, ParkingLot is a wrapper class around bunch of levels
+        - Levels are filled with parking spots
  */
 
 import java.util.List;
-import java.util.Queue;
 
 public class ParkingLotDesign {
 
     class ParkingLot {
-        Queue<ParkingSpot> availableSpots;
-        List<ParkingSpot> filledSpots;
+        Level[] levels;
+        private final int NUM_LEVELS = 5;
 
-        int perHourFee;
+        public void parkVehicle(Vehicle vehicle){
 
-        public ParkingLot(Queue<ParkingSpot> availableSpots, List<ParkingSpot> filledSpots, int perHourFee) {
-            this.availableSpots = availableSpots;
-            this.filledSpots = filledSpots;
-            this.perHourFee = perHourFee;
-        }
-
-        public boolean enterCar(Car car){
-            if(availableSpots.size() > 0){
-                ParkingSpot spot = availableSpots.remove();
-                car.park(spot);
-                filledSpots.add(spot);
-            }
-
-            return false;
-        }
-
-        public boolean exitCar(Car car){
-            if(car.occupiedSpot != null){
-                for(ParkingSpot spot : filledSpots){
-                    if(spot.equals(car.occupiedSpot)){
-                        filledSpots.remove(spot);
-                        break;
-                    }
-                }
-
-                availableSpots.add(car.occupiedSpot);
-                return true;
-            }
-
-            return false;
-        }
-
-    }
-
-    class Car {
-
-        String model;
-        String regNum;
-        ParkingSpot occupiedSpot;
-
-        void park(ParkingSpot spot){
-            spot.isAvailable = false;
-            spot.currentCar = this;
-            occupiedSpot = spot;
         }
     }
 
-    class Entrance {
-        boolean isOpened;
-
-        public void chargeFee(Car car){
-
-        }
+    class Level {
+        int level;
+        ParkingSpot[] parkingSpots;
+        int availableSpots;
     }
 
     class ParkingSpot {
-        int number;
-        boolean isAvailable;
-        Car currentCar;
+        int rowNum;
     }
+
+    public enum VehicleType {
+        LARGE, COMPACT, SMALL
+    }
+
+    public abstract class Vehicle {
+        protected List<ParkingSpot> spotsOccupied;
+        protected String licencePlate;
+        protected VehicleType type;
+        protected int rowSize;
+
+        public void park(ParkingSpot spot){
+            spotsOccupied.add(spot);
+        }
+
+        public void leave(){
+            spotsOccupied.clear();
+        }
+
+        public List<ParkingSpot> getSpotsOccupied() {
+            return spotsOccupied;
+        }
+
+        public String getLicencePlate() {
+            return licencePlate;
+        }
+
+        public VehicleType getType() {
+            return type;
+        }
+
+        public int getRowSize() {
+            return rowSize;
+        }
+    }
+
+    class Car extends Vehicle {
+        public Car() {
+            type = VehicleType.COMPACT;
+            rowSize = 1;
+        }
+    }
+
+    class MotorCycle extends Vehicle {
+        public MotorCycle() {
+            type = VehicleType.SMALL;
+            rowSize = 1;
+        }
+    }
+
+    class Bus extends Vehicle {
+        public Bus() {
+            type = VehicleType.LARGE;
+            rowSize = 5;
+        }
+    }
+
 }
