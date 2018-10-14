@@ -1,4 +1,5 @@
 import com.zolbayar.cracking_the_oyster.recursion_and_dynamic_programming.FibonacciCalculator;
+import com.zolbayar.cracking_the_oyster.recursion_and_dynamic_programming.TripleSteps;
 
 import java.math.BigInteger;
 
@@ -8,8 +9,11 @@ public class Main {
 
         long before = System.currentTimeMillis();
 
-        FibonacciCalculator fibonacciCalculator = new FibonacciCalculator();
-        BigInteger result = fibonacciCalculator.fibonacciBottomUp(300);
+//        FibonacciCalculator fibonacciCalculator = new FibonacciCalculator();
+//        BigInteger result = fibonacciCalculator.fibonacciBottomUp(300);
+
+        TripleSteps tripleSteps = new TripleSteps();
+        int result = tripleSteps.countStepsBF(10);
 
         System.out.println("Result: " + result);
 
