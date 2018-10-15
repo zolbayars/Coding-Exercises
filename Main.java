@@ -13,7 +13,7 @@ public class Main {
 //        BigInteger result = fibonacciCalculator.fibonacciBottomUp(300);
 
         TripleSteps tripleSteps = new TripleSteps();
-        int result = tripleSteps.countStepsBF(4);
+        int result = tripleSteps.countSteps(35);
 
         System.out.println("Result: " + result);
 
