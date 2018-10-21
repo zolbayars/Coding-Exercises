@@ -1,4 +1,5 @@
 import com.zolbayar.cracking_the_oyster.recursion_and_dynamic_programming.FibonacciCalculator;
+import com.zolbayar.cracking_the_oyster.recursion_and_dynamic_programming.RobotInGrid;
 import com.zolbayar.cracking_the_oyster.recursion_and_dynamic_programming.TripleSteps;
 
 import java.math.BigInteger;
@@ -12,10 +13,13 @@ public class Main {
 //        FibonacciCalculator fibonacciCalculator = new FibonacciCalculator();
 //        BigInteger result = fibonacciCalculator.fibonacciBottomUp(300);
 
-        TripleSteps tripleSteps = new TripleSteps();
-        int result = tripleSteps.countSteps(35);
+//        TripleSteps tripleSteps = new TripleSteps();
+//        int result = tripleSteps.countSteps(35);
 
-        System.out.println("Result: " + result);
+        RobotInGrid robotInGrid = new RobotInGrid();
+        robotInGrid.moveRobotFromTop();
+
+//        System.out.println("Result: " + result);
 
         long after = System.currentTimeMillis();
 
