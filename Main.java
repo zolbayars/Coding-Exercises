@@ -19,12 +19,32 @@ public class Main {
 //        TripleSteps tripleSteps = new TripleSteps();
 //        int result = tripleSteps.countSteps(35);
 
-        boolean[][] booleanGrid = new boolean[5][7];
-        boolean[] booleanCol = new boolean[7];
+        boolean[][] booleanGrid = new boolean[5][5];
+        boolean[] booleanCol = new boolean[5];
         Arrays.fill(booleanCol, true);
         Arrays.fill(booleanGrid, booleanCol);
 
 //        booleanGrid[2][2] = false;
+
+//        for (int i = 0; i < booleanGrid.length ; i++) {
+//            for (int j = 0; j < booleanGrid[i].length; j++) {
+//                if(i == 2 && j == 2){
+//                    booleanGrid[i][j] = false;
+//                    break;
+//                }
+//                System.out.println(i + " - " + j + ":" + booleanGrid[i][j]);
+//            }
+//        }
+
+
+//        System.out.println(booleanGrid[0][0]);
+//        System.out.println(booleanGrid[0][1]);
+//        System.out.println(booleanGrid[0][2]);
+//        System.out.println(booleanGrid[0][3]);
+//        System.out.println(booleanGrid[0][4]);
+//        System.out.println(booleanGrid[2][0]);
+//        System.out.println(booleanGrid[2][1]);
+//        System.out.println(booleanGrid[2][2]);
 
         RobotInGrid robotInGrid = new RobotInGrid();
         ArrayList<Point> path = robotInGrid.getPath(booleanGrid);

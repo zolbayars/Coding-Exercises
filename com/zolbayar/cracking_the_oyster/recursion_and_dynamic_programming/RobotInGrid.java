@@ -43,16 +43,24 @@ public class RobotInGrid {
 
     public ArrayList<Point> getPath(boolean[][] gridBool){
         ArrayList<Point> path = new ArrayList<>();
-        if(getPath(gridBool, gridBool.length - 1, gridBool[0].length - 1, path)){
+
+        boolean[][] memo = new boolean[gridBool.length][gridBool[0].length];
+
+        if(getPath(gridBool, gridBool.length - 1, gridBool[0].length - 1, path, memo)){
             return path;
         }
 
         return null;
     }
 
-    private boolean getPath(boolean[][] grid, int row, int col, ArrayList<Point> path){
+    private boolean getPath(boolean[][] grid, int row, int col, ArrayList<Point> path, boolean[][] memo){
 
-        System.out.println(row + " - " + col);
+//        System.out.println(space + row + " - " + col);
+
+//        if(row >= 0 && col >= 0){
+//            System.out.println(space + "" + grid[row][col]);
+//        }
+
         // Check if it's out of range
         if(row < 0 || col < 0 || !grid[row][col]){
             return false;
@@ -60,7 +68,17 @@ public class RobotInGrid {
 
         boolean isOriginalPoint = (row == 0) && (col == 0);
 
-        if(isOriginalPoint || getPath(grid, row - 1, col, path) || getPath(grid, row, col - 1, path)){
+        boolean rowBelowResult = memo[row - 1][col];
+        if(!rowBelowResult){
+            rowBelowResult = getPath(grid, row - 1, col, path, memo);
+        }
+
+        boolean colBesideResult = memo[row][col - 1];
+        if(!colBesideResult){
+            colBesideResult = getPath(grid, row, col - 1, path, memo);
+        }
+
+        if(isOriginalPoint || colBesideResult || rowBelowResult){
             path.add(new Point(row, col));
             return true;
         }
