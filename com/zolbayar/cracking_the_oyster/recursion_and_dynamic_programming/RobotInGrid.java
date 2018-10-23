@@ -3,6 +3,7 @@ package com.zolbayar.cracking_the_oyster.recursion_and_dynamic_programming;
 import java.awt.*;
 import java.lang.reflect.Array;
 import java.util.ArrayList;
+import java.util.HashSet;
 
 /*
     Purpose: A robot can only move in right and down direction in a grid with c columns and r rows.
@@ -44,16 +45,16 @@ public class RobotInGrid {
     public ArrayList<Point> getPath(boolean[][] gridBool){
         ArrayList<Point> path = new ArrayList<>();
 
-        boolean[][] memo = new boolean[gridBool.length][gridBool[0].length];
+        HashSet<Point> failedPoints = new HashSet<>();
 
-        if(getPath(gridBool, gridBool.length - 1, gridBool[0].length - 1, path, memo)){
+        if(getPath(gridBool, gridBool.length - 1, gridBool[0].length - 1, path, failedPoints)){
             return path;
         }
 
         return null;
     }
 
-    private boolean getPath(boolean[][] grid, int row, int col, ArrayList<Point> path, boolean[][] memo){
+    private boolean getPath(boolean[][] grid, int row, int col, ArrayList<Point> path, HashSet<Point> failedPoints){
 
 //        System.out.println(space + row + " - " + col);
 
@@ -66,23 +67,21 @@ public class RobotInGrid {
             return false;
         }
 
+        Point p = new Point(row, col);
+
+        if(failedPoints.contains(p)){
+            return false;
+        }
+
         boolean isOriginalPoint = (row == 0) && (col == 0);
 
-        boolean rowBelowResult = memo[row - 1][col];
-        if(!rowBelowResult){
-            rowBelowResult = getPath(grid, row - 1, col, path, memo);
-        }
-
-        boolean colBesideResult = memo[row][col - 1];
-        if(!colBesideResult){
-            colBesideResult = getPath(grid, row, col - 1, path, memo);
-        }
-
-        if(isOriginalPoint || colBesideResult || rowBelowResult){
-            path.add(new Point(row, col));
+        if(isOriginalPoint || getPath(grid, row - 1, col, path, failedPoints) ||
+                getPath(grid, row, col - 1, path, failedPoints)){
+            path.add(p);
             return true;
         }
 
+        failedPoints.add(p);
         return false;
     }
 
