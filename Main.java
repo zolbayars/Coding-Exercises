@@ -14,7 +14,7 @@ public class Main {
 
         long before = System.currentTimeMillis();
 
-        int[] arr = new int[]{5, 2, 1, 10};
+        int[] arr = new int[]{-50, -10, 1, 4, 4, 99, 100};
         MagicIndex magicIndex = new MagicIndex();
         int result = magicIndex.findMagicIndex(arr);
 
