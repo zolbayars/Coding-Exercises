@@ -1,12 +1,12 @@
-import com.zolbayar.cracking_the_oyster.recursion_and_dynamic_programming.FibonacciCalculator;
-import com.zolbayar.cracking_the_oyster.recursion_and_dynamic_programming.MagicIndex;
-import com.zolbayar.cracking_the_oyster.recursion_and_dynamic_programming.RobotInGrid;
-import com.zolbayar.cracking_the_oyster.recursion_and_dynamic_programming.TripleSteps;
+import com.zolbayar.cracking_the_oyster.recursion_and_dynamic_programming.*;
 
 import java.awt.*;
 import java.math.BigInteger;
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.HashSet;
+import java.util.List;
+import java.util.Set;
 
 public class Main {
     public static void main(String[] args){
@@ -14,11 +14,27 @@ public class Main {
 
         long before = System.currentTimeMillis();
 
-        int[] arr = new int[]{-50, -10, 1, 2, 3, 4, 5, 9, 10, 10, 10, 15, 21, 36, 100};
-        MagicIndex magicIndex = new MagicIndex();
-        int result = magicIndex.findMagicIndex(arr);
 
-        System.out.println("Result: " + result);
+        Subset subset = new Subset();
+        List<Integer> set = new ArrayList<>();
+        set.add(4);
+        set.add(7);
+        set.add(10);
+        set.add(25);
+        List<List<Integer>> sets = subset.getSubsets(set);
+        for (List<Integer> innerSet : sets) {
+            for (Integer integer : innerSet) {
+                System.out.print(integer + " ");
+            }
+            System.out.println();
+        }
+
+
+//        int[] arr = new int[]{-50, -10, 1, 2, 3, 4, 5, 9, 10, 10, 10, 15, 21, 36, 100};
+//        MagicIndex magicIndex = new MagicIndex();
+//        int result = magicIndex.findMagicIndex(arr);
+
+//        System.out.println("Result: " + result);
 
 //        FibonacciCalculator fibonacciCalculator = new FibonacciCalculator();
 //        BigInteger result = fibonacciCalculator.fibonacciBottomUp(300);
