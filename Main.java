@@ -1,12 +1,7 @@
 import com.zolbayar.cracking_the_oyster.recursion_and_dynamic_programming.*;
 
-import java.awt.*;
-import java.math.BigInteger;
 import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.HashSet;
 import java.util.List;
-import java.util.Set;
 
 public class Main {
     public static void main(String[] args){
@@ -21,7 +16,7 @@ public class Main {
         set.add(7);
         set.add(10);
         set.add(25);
-        List<List<Integer>> sets = subset.getSubsets(set);
+        List<List<Integer>> sets = subset.getSubLists(set);
         for (List<Integer> innerSet : sets) {
             for (Integer integer : innerSet) {
                 System.out.print(integer + " ");
