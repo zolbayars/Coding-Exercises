@@ -12,10 +12,9 @@ public class Main {
 
         Subset subset = new Subset();
         List<Integer> set = new ArrayList<>();
-        set.add(4);
-        set.add(7);
-        set.add(10);
-        set.add(25);
+        set.add(1);
+        set.add(2);
+        set.add(3);
         List<List<Integer>> sets = subset.getSubLists(set);
         for (List<Integer> innerSet : sets) {
             for (Integer integer : innerSet) {
