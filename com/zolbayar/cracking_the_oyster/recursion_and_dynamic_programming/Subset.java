@@ -30,36 +30,55 @@ public class Subset {
     //
     public List<List<Integer>> getSubLists(List<Integer> list){
         List<List<Integer>> accList = new ArrayList<>();
-        return getSubLists(list, list.size() - 1, accList);
+        return getSubLists(list, list.size(), accList);
     }
 
     private List<List<Integer>> getSubLists(List<Integer> list, int n, List<List<Integer>> accList){
-       if(n == 0){
-           List<Integer> tmpList = new ArrayList<>();
-           tmpList.add(null);
-           tmpList.add(list.get(0));
-           accList.add(tmpList);
-           return accList;
-       }
 
-       List<List<Integer>> prevLists = getSubLists(list, n - 1, accList);
-       List<List<Integer>> prevListsClone = prevLists;
+        System.out.println("n = " + n);
 
-        printList(prevLists, "prevLists before");
+        if(n == 0){
+            List<Integer> newList = new ArrayList<>();
+            newList.add(null);
 
-        for (int i = 0; i < prevListsClone.size(); i++) {
-            prevListsClone.get(i).add(list.get(n));
-
-            for (Integer integer : prevListsClone.get(i)) {
-
-            }
+            accList.add(newList);
+            return accList;
         }
 
-        prevLists.addAll(prevListsClone);
+//        if(n == 1){
+//            List<Integer> newList = new ArrayList<>();
+//            newList.add(list.get(0));
+//
+//            accList.add(newList);
+//            return accList;
+//        }
 
-        printList(prevLists, "prevLists");
+        List<List<Integer>> accumulatedLists = getSubLists(list, n - 1, accList);
 
-        return prevLists;
+        System.out.println("accumulatedLists.size() = " + accumulatedLists.size() + " n: " + n);
+        
+        for (int i = 0; i < accumulatedLists.size(); i++) {
+            
+            List<Integer> listToChange = accumulatedLists.get(i);
+
+            listToChange.add(list.get(n - 1));
+            System.out.println("list.get(n - 1) = " + list.get(n - 1));
+            accumulatedLists.set(i, listToChange);
+        }
+
+        List<Integer> listToAdd = accumulatedLists.get(0);
+
+        for (int j = 0; j < listToAdd.size(); j++) {
+            List<Integer> newList = new ArrayList<>();
+            newList.add(listToAdd.get(j));
+            accumulatedLists.add(newList);
+        }
+
+        List<Integer> nList = new ArrayList<>();
+        nList.add(list.get(n - 1));
+        accumulatedLists.add(nList);
+
+        return accumulatedLists;
     }
 
     private void printList(List<List<Integer>> list, String name){
