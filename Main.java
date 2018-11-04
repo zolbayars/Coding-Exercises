@@ -6,23 +6,26 @@ import java.util.List;
 public class Main {
     public static void main(String[] args){
 
-
         long before = System.currentTimeMillis();
 
+        RecursiveMultiply recursiveMultiply = new RecursiveMultiply();
+        int result = recursiveMultiply.multiply(1000, 500);
 
-        Subset subset = new Subset();
-        List<Integer> set = new ArrayList<>();
-        set.add(1);
-        set.add(2);
-        set.add(3);
-//        List<List<Integer>> sets = subset.getSubLists(set);
-        List<List<Integer>> sets = subset.getSubSets(set, 0);
-        for (List<Integer> innerSet : sets) {
-            for (Integer integer : innerSet) {
-                System.out.print(integer + " ");
-            }
-            System.out.println();
-        }
+        System.out.println("result = " + result);
+
+//        Subset subset = new Subset();
+//        List<Integer> set = new ArrayList<>();
+//        set.add(1);
+//        set.add(2);
+//        set.add(3);
+////        List<List<Integer>> sets = subset.getSubLists(set);
+//        List<List<Integer>> sets = subset.getSubSets(set, 0);
+//        for (List<Integer> innerSet : sets) {
+//            for (Integer integer : innerSet) {
+//                System.out.print(integer + " ");
+//            }
+//            System.out.println();
+//        }
 
 
 //        int[] arr = new int[]{-50, -10, 1, 2, 3, 4, 5, 9, 10, 10, 10, 15, 21, 36, 100};
