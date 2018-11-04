@@ -15,7 +15,8 @@ public class Main {
         set.add(1);
         set.add(2);
         set.add(3);
-        List<List<Integer>> sets = subset.getSubLists(set);
+//        List<List<Integer>> sets = subset.getSubLists(set);
+        List<List<Integer>> sets = subset.getSubSets(set, 0);
         for (List<Integer> innerSet : sets) {
             for (Integer integer : innerSet) {
                 System.out.print(integer + " ");

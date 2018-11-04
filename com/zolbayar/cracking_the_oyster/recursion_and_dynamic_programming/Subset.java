@@ -7,6 +7,8 @@ import java.util.*;
 
     Insight: Classic case for using the Base Case & Build approach
              Implement by hand with some simple test cases!
+             The base case is where the index = size
+             Could've stored list info in binary strings (1011 means the first and the last elements are in the list)
 
             set: {}
             subsets: {}
@@ -26,8 +28,35 @@ import java.util.*;
 
 public class Subset {
 
+    // After I saw the solution
+    public List<List<Integer>> getSubSets(List<Integer> set, int index){
+        List<List<Integer>> allSubsets;
+//        System.out.println("index = " + index);
+
+        // base case
+        if(index == set.size()){
+            allSubsets = new ArrayList<>();
+            allSubsets.add(new ArrayList<>());
+        }else{
+            allSubsets = getSubSets(set, index + 1);
+            int item = set.get(index);
+
+            List<List<Integer>> moreSubsets = new ArrayList<>();
+            for (List<Integer> integers : allSubsets) {
+                List<Integer> newSubset = new ArrayList<>();
+                newSubset.addAll(integers);
+                newSubset.add(item);
+                moreSubsets.add(newSubset);
+            }
+            allSubsets.addAll(moreSubsets);
+        }
+
+        return allSubsets;
+
+    }
+
     // {4, 7, 1, 13}
-    //
+    // My way
     public List<List<Integer>> getSubLists(List<Integer> list){
         List<List<Integer>> accList = new ArrayList<>();
         return getSubLists(list, list.size(), accList);
