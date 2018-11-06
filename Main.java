@@ -9,7 +9,9 @@ public class Main {
         long before = System.currentTimeMillis();
 
         RecursiveMultiply recursiveMultiply = new RecursiveMultiply();
-        int result = recursiveMultiply.multiply(1000, 500);
+        int result = recursiveMultiply.multiply(7, 9);
+
+//        int result = recursiveMultiply.fibonacci(9);
 
         System.out.println("result = " + result);
 

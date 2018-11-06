@@ -8,15 +8,39 @@ package com.zolbayar.cracking_the_oyster.recursion_and_dynamic_programming;
 
 public class RecursiveMultiply {
 
+    int sum = 0;
+
     public int multiply(int a, int b){
 
-        int result = 0;
+        System.out.println("b = " + b);
 
-        for (int i = 0; i < b; i++) {
-            result += a;
+        if(b == 0){
+            return 0;
         }
 
-        return result;
+        if(b == 1){
+            return a;
+        }
+
+
+        sum = multiply(a, b - 1) + multiply(a, b - 2);
+
+        return sum;
+    }
+
+    public int fibonacci(int x){
+
+        if(x == 0){
+            return 0;
+        }
+
+        if(x == 1){
+            return 1;
+        }
+
+
+
+        return fibonacci(x - 1) + fibonacci( x - 2);
     }
 
 }
