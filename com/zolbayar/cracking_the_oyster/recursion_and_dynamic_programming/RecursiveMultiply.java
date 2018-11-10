@@ -14,7 +14,7 @@ public class RecursiveMultiply {
 
         System.out.println("b = " + b);
 
-        if(b == 0){
+        if(b <= 0){
             return 0;
         }
 
@@ -22,8 +22,11 @@ public class RecursiveMultiply {
             return a;
         }
 
-
-        sum = multiply(a, b - 1) + multiply(a, b - 2);
+        int result = multiply(a, b - 1);
+        if(sum == 0){
+            sum = result;
+        }
+        sum += a;
 
         return sum;
     }
