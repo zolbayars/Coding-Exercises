@@ -9,10 +9,10 @@ public class Main {
         long before = System.currentTimeMillis();
 
         RecursiveMultiply recursiveMultiply = new RecursiveMultiply();
-        int result = recursiveMultiply.multiply(7, 9);
+        int result = recursiveMultiply.multiply(30, 37);
 
 //        int result = recursiveMultiply.fibonacci(9);
-
+//        System.out.println("(3 >> 1) = " + (3 >> 1));
         System.out.println("result = " + result);
 
 //        Subset subset = new Subset();
