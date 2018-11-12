@@ -8,12 +8,15 @@ public class Main {
 
         long before = System.currentTimeMillis();
 
-        RecursiveMultiply recursiveMultiply = new RecursiveMultiply();
-        int result = recursiveMultiply.multiply(30, 37);
+        TowersOfHanoi towersOfHanoi = new TowersOfHanoi();
+        towersOfHanoi.move();
+
+//        RecursiveMultiply recursiveMultiply = new RecursiveMultiply();
+//        int result = recursiveMultiply.multiply(30, 37);
 
 //        int result = recursiveMultiply.fibonacci(9);
 //        System.out.println("(3 >> 1) = " + (3 >> 1));
-        System.out.println("result = " + result);
+//        System.out.println("result = " + result);
 
 //        Subset subset = new Subset();
 //        List<Integer> set = new ArrayList<>();
