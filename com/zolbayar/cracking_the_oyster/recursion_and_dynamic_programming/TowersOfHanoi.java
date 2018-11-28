@@ -31,43 +31,27 @@ public class TowersOfHanoi {
 
     public void move(){
         Stack<Integer> result = move(this.tower1, this.tower2, this.tower3);
+        for (Integer integer : result) {
+            System.out.println(integer);
+        }
     }
 
+    // 2 10 34 55
     public Stack<Integer> move(Stack<Integer> tower1, Stack<Integer> tower2, Stack<Integer> tower3){
 
-        if(tower1.size() == 1){
-            tower3.push(tower1.pop());
+        if(tower2.size() == 1){
+            tower3.push(tower2.pop());
+            return tower3;
         }
 
-        if(tower1.size() == 2){
-            tower2.push(tower1.pop());
-            tower2.push(tower1.pop());
+        if(tower2.size() == 2){
+            tower1.push(tower2.pop());
             tower3.push(tower2.pop());
-            tower3.push(tower2.pop());
+            tower3.push(tower1.pop());
+            return tower3;
         }
 
-        if(tower1.size() == 3){
-            tower3.push(tower1.pop());
-            tower2.push(tower1.pop());
-            tower2.push(tower3.pop());
-            tower3.push(tower1.pop());
-            tower3.push(tower2.pop());
-            tower3.push(tower2.pop());
-        }
-
-        if(tower1.size() == 4){
-            tower2.push(tower1.pop());
-            tower3.push(tower1.pop());
-            tower3.push(tower2.pop());
-            tower2.push(tower1.pop());
-            tower2.push(tower3.pop());
-            tower2.push(tower3.pop());
-            tower3.push(tower1.pop());
-            tower3.push(tower2.pop());
-            tower3.push(tower2.pop());
-            tower3.push(tower2.pop());
-        }
-
-        return null;
+        tower2.push(tower1.pop());
+        return move(tower1, tower2, tower3);
     }
 }
