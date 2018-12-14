@@ -18,12 +18,17 @@ public class TowersOfHanoi {
 
     public TowersOfHanoi() {
         this.tower1 = new Stack<>();
-        this.tower1.push(100);
-        this.tower1.push(76);
-        this.tower1.push(55);
-        this.tower1.push(34);
         this.tower1.push(10);
+        this.tower1.push(9);
+        this.tower1.push(8);
+        this.tower1.push(7);
+        this.tower1.push(6);
+        this.tower1.push(5);
+        this.tower1.push(4);
+        this.tower1.push(3);
         this.tower1.push(2);
+        this.tower1.push(1);
+        this.tower1.push(0);
 
         this.tower2 = new Stack<>();
         this.tower3 = new Stack<>();
@@ -35,7 +40,7 @@ public class TowersOfHanoi {
         System.out.println("this.tower2 = " + this.tower2);
         System.out.println("this.tower3 = " + this.tower3);
 
-        ThreeTowers result = move(this.tower1, this.tower2, this.tower3, 5);
+        ThreeTowers result = move(this.tower1, this.tower2, this.tower3, this.tower1.size(), "", 0);
 //        ThreeTowers result = move(this.tower1, this.tower2, this.tower3, this.tower1.size());
 
         System.out.println("After:");
@@ -45,7 +50,8 @@ public class TowersOfHanoi {
     }
 
     // 2 10 34 55
-    public ThreeTowers move(Stack<Integer> tower1, Stack<Integer> tower2, Stack<Integer> tower3, int sizeToMove){
+    public ThreeTowers move(Stack<Integer> tower1, Stack<Integer> tower2, Stack<Integer> tower3,
+                            int sizeToMove, String tabPrint, int level){
 
         if(sizeToMove == 1){
             if(!tower3.isEmpty() && tower3.peek() < tower1.peek()){
@@ -53,11 +59,14 @@ public class TowersOfHanoi {
             }
             tower3.push(tower1.pop());
             ThreeTowers result = new ThreeTowers(tower1, tower2, tower3);
-            System.out.println("result = " + result + " sizeToMove = " + sizeToMove);
+            System.out.println(level + tabPrint + "result = " + result);
             return result;
         }
 
         if(sizeToMove == 2){
+
+            ThreeTowers before = new ThreeTowers(tower1, tower2, tower3);
+            System.out.println(level + tabPrint + "before = " + before);
 
             if(!tower2.isEmpty() && tower2.peek() < tower1.peek()){
                 throw new IllegalStateException("The base disc should be smaller!");
@@ -74,24 +83,29 @@ public class TowersOfHanoi {
             }
             tower3.push(tower2.pop());
             ThreeTowers result = new ThreeTowers(tower1, tower2, tower3);
-            System.out.println("result = " + result + " sizeToMove = " + sizeToMove);
+            System.out.println(level + tabPrint + "result = " + result);
             return result;
         }
 
-        ThreeTowers towersAfterMove = move(tower1, tower2, tower3, sizeToMove - 1);
-//        System.out.println("towersAfterMove = " + towersAfterMove + " sizeToMove = " + sizeToMove);
+        ThreeTowers towersAfterMove = move(tower1, tower2, tower3, sizeToMove - 1, tabPrint + " ", level + 1);
+        System.out.println(level + tabPrint + "towersAfterMove = " + towersAfterMove + " sizeToMove = " + sizeToMove);
         Stack<Integer> tower1Modified = towersAfterMove.getTower1();
         Stack<Integer> tower2Modified = towersAfterMove.getTower2();
         Stack<Integer> tower3Modified = towersAfterMove.getTower3();
 
         if(tower1Modified.size() > 0){
-            tower2Modified.push(tower1Modified.pop());
+            if(!tower2Modified.isEmpty() && tower2Modified.peek() < tower1Modified.peek()){
+                tower1Modified.push(tower2Modified.pop());
+            }else{
+                tower2Modified.push(tower1Modified.pop());
+            }
+
         }else{
             tower1Modified.push(tower2Modified.pop());
         }
 
 
-        return move(tower3Modified, tower1Modified, tower2Modified, sizeToMove - 1);
+        return move(tower3Modified, tower1Modified, tower2Modified, sizeToMove - 1, tabPrint + " ", level + 1);
 //        return new ThreeTowers(tower1Modified, tower2Modified, tower3Modified);
     }
 
