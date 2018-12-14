@@ -35,7 +35,8 @@ public class TowersOfHanoi {
         System.out.println("this.tower2 = " + this.tower2);
         System.out.println("this.tower3 = " + this.tower3);
 
-        ThreeTowers result = move(this.tower1, this.tower2, this.tower3, this.tower1.size());
+        ThreeTowers result = move(this.tower1, this.tower2, this.tower3, 5);
+//        ThreeTowers result = move(this.tower1, this.tower2, this.tower3, this.tower1.size());
 
         System.out.println("After:");
         System.out.println("this.tower1 = " + this.tower1);
@@ -47,23 +48,48 @@ public class TowersOfHanoi {
     public ThreeTowers move(Stack<Integer> tower1, Stack<Integer> tower2, Stack<Integer> tower3, int sizeToMove){
 
         if(sizeToMove == 1){
+            if(!tower3.isEmpty() && tower3.peek() < tower1.peek()){
+                throw new IllegalStateException("The base disc should be smaller!");
+            }
             tower3.push(tower1.pop());
-            return new ThreeTowers(tower1, tower2, tower3);
+            ThreeTowers result = new ThreeTowers(tower1, tower2, tower3);
+            System.out.println("result = " + result + " sizeToMove = " + sizeToMove);
+            return result;
         }
 
         if(sizeToMove == 2){
+
+            if(!tower2.isEmpty() && tower2.peek() < tower1.peek()){
+                throw new IllegalStateException("The base disc should be smaller!");
+            }
             tower2.push(tower1.pop());
+
+            if(!tower3.isEmpty() && tower3.peek() < tower1.peek()){
+                throw new IllegalStateException("The base disc should be smaller!");
+            }
             tower3.push(tower1.pop());
+
+            if(!tower3.isEmpty() && tower3.peek() < tower2.peek()){
+                throw new IllegalStateException("The base disc should be smaller!");
+            }
             tower3.push(tower2.pop());
-            return new ThreeTowers(tower1, tower2, tower3);
+            ThreeTowers result = new ThreeTowers(tower1, tower2, tower3);
+            System.out.println("result = " + result + " sizeToMove = " + sizeToMove);
+            return result;
         }
 
         ThreeTowers towersAfterMove = move(tower1, tower2, tower3, sizeToMove - 1);
-        System.out.println("towersAfterMove = " + towersAfterMove + " sizeToMove = " + sizeToMove);
+//        System.out.println("towersAfterMove = " + towersAfterMove + " sizeToMove = " + sizeToMove);
         Stack<Integer> tower1Modified = towersAfterMove.getTower1();
         Stack<Integer> tower2Modified = towersAfterMove.getTower2();
         Stack<Integer> tower3Modified = towersAfterMove.getTower3();
-        tower2Modified.push(tower1Modified.pop());
+
+        if(tower1Modified.size() > 0){
+            tower2Modified.push(tower1Modified.pop());
+        }else{
+            tower1Modified.push(tower2Modified.pop());
+        }
+
 
         return move(tower3Modified, tower1Modified, tower2Modified, sizeToMove - 1);
 //        return new ThreeTowers(tower1Modified, tower2Modified, tower3Modified);
