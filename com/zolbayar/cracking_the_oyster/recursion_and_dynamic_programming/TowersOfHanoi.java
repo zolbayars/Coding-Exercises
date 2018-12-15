@@ -6,6 +6,7 @@ package com.zolbayar.cracking_the_oyster.recursion_and_dynamic_programming;
 
     Insight: A disk cannot be placed on a smaller disk! Read the description carefully!
             Base case and Build!
+            The solution was so much easy. Look for simple solutions first!
  */
 
 import java.util.Stack;
@@ -40,8 +41,8 @@ public class TowersOfHanoi {
         System.out.println("this.tower2 = " + this.tower2);
         System.out.println("this.tower3 = " + this.tower3);
 
-        ThreeTowers result = move(this.tower1, this.tower2, this.tower3, this.tower1.size(), "", 0);
-//        ThreeTowers result = move(this.tower1, this.tower2, this.tower3, this.tower1.size());
+//        ThreeTowers result = move(this.tower1, this.tower2, this.tower3, this.tower1.size(), "", 0);
+        moveDiscs(this.tower1, this.tower2, this.tower3, this.tower1.size());
 
         System.out.println("After:");
         System.out.println("this.tower1 = " + this.tower1);
@@ -49,7 +50,27 @@ public class TowersOfHanoi {
         System.out.println("this.tower3 = " + this.tower3);
     }
 
-    // 2 10 34 55
+    void moveTop(Stack<Integer> origin, Stack<Integer> destination){
+        destination.push(origin.pop());
+    }
+
+    // Book way
+    public void moveDiscs(Stack<Integer> origin, Stack<Integer> destination, Stack<Integer> buffer, int n){
+        if(n >= 1){
+
+            ThreeTowers before = new ThreeTowers(origin, destination, buffer);
+            System.out.println(n + "before = " + before);
+
+            moveDiscs(origin, buffer, destination, n - 1);
+            moveTop(origin, destination);
+            moveDiscs(buffer, destination, origin, n - 1);
+
+            ThreeTowers after = new ThreeTowers(origin, destination, buffer);
+            System.out.println(n + "after = " + after);
+        }
+    }
+
+    // My way
     public ThreeTowers move(Stack<Integer> tower1, Stack<Integer> tower2, Stack<Integer> tower3,
                             int sizeToMove, String tabPrint, int level){
 
