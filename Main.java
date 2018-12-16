@@ -9,7 +9,7 @@ public class Main {
         long before = System.currentTimeMillis();
 
         PermutationsWithoutDups perms = new PermutationsWithoutDups();
-        perms.getPermutations("abcde");
+        perms.getPermutations("abc");
 
 //        TowersOfHanoi towersOfHanoi = new TowersOfHanoi();
 //        towersOfHanoi.move();
