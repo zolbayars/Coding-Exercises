@@ -8,8 +8,11 @@ public class Main {
 
         long before = System.currentTimeMillis();
 
-        TowersOfHanoi towersOfHanoi = new TowersOfHanoi();
-        towersOfHanoi.move();
+        PermutationsWithoutDups perms = new PermutationsWithoutDups();
+        perms.getPermutations("abcde");
+
+//        TowersOfHanoi towersOfHanoi = new TowersOfHanoi();
+//        towersOfHanoi.move();
 
 //        RecursiveMultiply recursiveMultiply = new RecursiveMultiply();
 //        int result = recursiveMultiply.multiply(30, 37);
