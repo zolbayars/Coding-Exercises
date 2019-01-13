@@ -8,8 +8,8 @@ public class Main {
 
         long before = System.currentTimeMillis();
 
-        PermutationsWithoutDups perms = new PermutationsWithoutDups();
-        perms.getPermutations("abcde");
+        PermutationsWithDups perms = new PermutationsWithDups();
+        perms.getPermutations("abaa");
 
 //        TowersOfHanoi towersOfHanoi = new TowersOfHanoi();
 //        towersOfHanoi.move();
