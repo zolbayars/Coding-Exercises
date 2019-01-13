@@ -41,7 +41,7 @@ public class PermutationsWithoutDups {
 
         List<String> prevPerms = getRealPermutation(chars);
         for (String prevPerm : prevPerms) {
-            for (int i = 0; i < prevPerm.length(); i++) {
+            for (int i = 0; i <= prevPerm.length(); i++) {
                 String newPerm = insertCharAt(prevPerm, current, i);
                 currentList.add(newPerm);
             }
