@@ -1,24 +1,44 @@
 package com.zolbayar.cracking_the_oyster.recursion_and_dynamic_programming;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
+
+/*
+    Can't improve the worst case performance. But at least when the there are multiple same letters, it should fare better.
+    Just checking if there are duplicate element in the list is not enough
+ */
 
 public class PermutationsWithDups {
 
     // aba => aab, aba, baa
     public List<String> getPermutations(String string){
-        String[] chars = string.split("");
-        List<String> list = new ArrayList<>();
+        char[] chars = string.toCharArray();
+        Map<Character, Integer> map = new HashMap<>();
 
-        for (int i = 0; i < chars.length; i++) {
-            list.add(chars[i]);
-            System.out.println("chars[i] = " + chars[i]);
+        for (char aChar : chars) {
+
+//            try {
+//
+//            }catch (Exception ex){
+//
+//            }
+            int currentCount = map.get(aChar);
+            if (currentCount > -1) {
+                map.put(aChar, currentCount++);
+            } else {
+                map.put(aChar, 1);
+            }
+
         }
 
-        List<String> result = getRealPermutation(list);
-        for (String s : result) {
-            System.out.println(s);
-        }
+        System.out.println(map);
+
+//        List<String> result = getRealPermutation(list);
+//        for (String s : result) {
+//            System.out.println(s);
+//        }
 
         return null;
     }
@@ -44,9 +64,9 @@ public class PermutationsWithDups {
         for (String prevPerm : prevPerms) {
             for (int i = 0; i <= prevPerm.length(); i++) {
                 String newPerm = insertCharAt(prevPerm, current, i);
-                if(currentList.indexOf(newPerm) < 0){
+//                if(currentList.indexOf(newPerm) < 0){
                     currentList.add(newPerm);
-                }
+//                }
 
             }
         }
