@@ -1,9 +1,6 @@
 package com.zolbayar.cracking_the_oyster.recursion_and_dynamic_programming;
 
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 
 /*
     Can't improve the worst case performance. But at least when the there are multiple same letters, it should fare better.
@@ -19,15 +16,15 @@ public class PermutationsWithDups {
 
         for (char aChar : chars) {
 
-//            try {
-//
-//            }catch (Exception ex){
-//
-//            }
-            int currentCount = map.get(aChar);
-            if (currentCount > -1) {
-                map.put(aChar, currentCount++);
-            } else {
+            try {
+                int currentCount = map.get(aChar);
+//                System.out.println(currentCount);
+                if (currentCount > -1) {
+                    map.put(aChar, ++currentCount);
+                } else {
+                    map.put(aChar, 1);
+                }
+            }catch (Exception ex){
                 map.put(aChar, 1);
             }
 
@@ -35,48 +32,64 @@ public class PermutationsWithDups {
 
         System.out.println(map);
 
-//        List<String> result = getRealPermutation(list);
-//        for (String s : result) {
-//            System.out.println(s);
-//        }
 
-        return null;
+        return getPermutation(map);
     }
 
-    List<String> getRealPermutation(List<String> chars){
-        if(chars.size() == 1){
-            List<String> list = new ArrayList<>();
-            list.add(chars.get(0));
-            return list;
-        }
+    // aabc
+    // abca, abac, acab, acba, aabc, aacb,
+    // baac, baca, , acba, aabc, aacb,
 
-        if(chars.size() == 2){
-            List<String> list = new ArrayList<>();
-            list.add(chars.get(0) + chars.get(1));
-            list.add(chars.get(1) + chars.get(0));
-            return list;
-        }
+    /*
+    a + {a: 1, b: 1, c:1} => a + {a: 0, b: 1, c: 1} => b + {a: 0, b: 0, c: 1} => c
 
-        String current = chars.remove(chars.size() - 1);
-        List<String> currentList = new ArrayList<>();
+    aabc
 
-        List<String> prevPerms = getRealPermutation(chars);
-        for (String prevPerm : prevPerms) {
-            for (int i = 0; i <= prevPerm.length(); i++) {
-                String newPerm = insertCharAt(prevPerm, current, i);
-//                if(currentList.indexOf(newPerm) < 0){
-                    currentList.add(newPerm);
-//                }
+     */
+    List<String> getPermutation(Map<Character, Integer> countMap){
 
+        Map<Character, Integer> countMapLocal = countMap;
+        Map<Character, Integer> countMapLocalForCheck = countMap;
+
+        char oneValue = 0;
+        boolean allButOneValue = false;
+
+        // the base case when there are only 1 char left
+        for(Map.Entry<Character, Integer> count: countMapLocalForCheck.entrySet()){
+
+            if(count.getValue() > 0){
+                if(oneValue != 0){
+                    allButOneValue = false;
+                }else{
+                    allButOneValue = true;
+                    oneValue = count.getKey();
+                }
             }
         }
 
-        return currentList;
-    }
+        if(allButOneValue){
+            List<String> result = new ArrayList<String>();
+            result.add(oneValue + "");
+            return result;
+        }
 
-    private String insertCharAt(String s, String c,  int index){
-        String before = s.substring(0, index);
-        String after = s.substring(index);
-        return before + c + after;
+        List<String> result = new ArrayList<>();
+
+        countMapLocal.replaceAll((key, value) -> {
+            if(value > 0){
+                System.out.println("key = " + key);
+                System.out.println("value = " + value);
+                Map<Character, Integer> newMap = countMapLocal;
+                newMap.put(key, value - 1);
+                List<String> suffices = getPermutation(newMap);
+                for(String suffix: suffices){
+                    result.add(key + suffix);
+                }
+                return value - 1;
+            }
+            return value;
+        });
+
+        return result;
     }
 }
