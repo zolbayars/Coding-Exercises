@@ -5,90 +5,60 @@ import java.util.*;
 /*
     Can't improve the worst case performance. But at least when the there are multiple same letters, it should fare better.
     Just checking if there are duplicate element in the list is not enough
+
+    Insight: My solution was too complex. Net yet fully grasped the base case and recurse approach.
+        You can check the base case with a separate variable
  */
 
 public class PermutationsWithDups {
 
     // aba => aab, aba, baa
     public List<String> getPermutations(String string){
-        char[] chars = string.toCharArray();
         Map<Character, Integer> map = new HashMap<>();
 
-        for (char aChar : chars) {
-
+        for (char aChar : string.toCharArray()) {
             try {
-                int currentCount = map.get(aChar);
-//                System.out.println(currentCount);
-                if (currentCount > -1) {
-                    map.put(aChar, ++currentCount);
-                } else {
+                if(map.containsKey(aChar)){
+                    map.put(aChar, map.get(aChar) + 1);
+                }else{
                     map.put(aChar, 1);
                 }
             }catch (Exception ex){
                 map.put(aChar, 1);
             }
-
         }
 
         System.out.println(map);
 
+        ArrayList<String> result = new ArrayList<>();
 
-        return getPermutation(map);
+        return getPermutation(map, "", string.length(), result, "");
+//        return null;
     }
 
     // aabc
     // abca, abac, acab, acba, aabc, aacb,
     // baac, baca, , acba, aabc, aacb,
+    List<String> getPermutation(Map<Character, Integer> countMap, String prefix, int remaining,
+                                ArrayList<String> result, String printPrefix){
 
-    /*
-    a + {a: 1, b: 1, c:1} => a + {a: 0, b: 1, c: 1} => b + {a: 0, b: 0, c: 1} => c
+        System.out.println(printPrefix + "countMap: " + countMap + " prefix: " + prefix +
+                " remaining: " + remaining + " result: " + result.size());
 
-    aabc
-
-     */
-    List<String> getPermutation(Map<Character, Integer> countMap){
-
-        Map<Character, Integer> countMapLocal = countMap;
-        Map<Character, Integer> countMapLocalForCheck = countMap;
-
-        char oneValue = 0;
-        boolean allButOneValue = false;
-
-        // the base case when there are only 1 char left
-        for(Map.Entry<Character, Integer> count: countMapLocalForCheck.entrySet()){
-
-            if(count.getValue() > 0){
-                if(oneValue != 0){
-                    allButOneValue = false;
-                }else{
-                    allButOneValue = true;
-                    oneValue = count.getKey();
-                }
-            }
-        }
-
-        if(allButOneValue){
-            List<String> result = new ArrayList<String>();
-            result.add(oneValue + "");
+        if(remaining == 0){
+            result.add(prefix);
             return result;
         }
 
-        List<String> result = new ArrayList<>();
-
-        countMapLocal.replaceAll((key, value) -> {
-            if(value > 0){
-                System.out.println("key = " + key);
-                System.out.println("value = " + value);
-                Map<Character, Integer> newMap = countMapLocal;
-                newMap.put(key, value - 1);
-                List<String> suffices = getPermutation(newMap);
-                for(String suffix: suffices){
-                    result.add(key + suffix);
-                }
-                return value - 1;
+        for(char countChar : countMap.keySet()){
+//            System.out.println("countChar = " + countChar);
+            int count = countMap.get(countChar);
+            if(count > 0){
+                countMap.put(countChar, count - 1);
+                getPermutation(countMap, countChar + prefix, remaining - 1, result, printPrefix + "   ");
+                countMap.put(countChar, count);
             }
-            return value;
-        });
+        }
 
         return result;
     }
