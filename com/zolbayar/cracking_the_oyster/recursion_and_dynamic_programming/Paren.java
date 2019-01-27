@@ -10,10 +10,7 @@ public class Paren {
 
         public Parenthesis() {
             this.current = "()";
-        }
-
-        public Parenthesis(String current) {
-            this.current = current;
+            this.count = 1;
         }
 
         public String addInside(int count){
@@ -29,8 +26,19 @@ public class Paren {
 
             String newC = new StringBuilder(this.current).insert(index, startingParensToAdd).toString();
             newC = new StringBuilder(newC).insert(index + count, endingParensToAdd).toString();
-//            System.out.println("newC = " + newC);
-            return null;
+            System.out.println("newC = " + newC);
+            this.current = newC;
+            return this.current;
+        }
+
+        public String addOutside(int count){
+            StringBuilder builder = new StringBuilder(this.current);
+            for(int i = 0; i < count; i++){
+                builder.append("()");
+            }
+
+            this.current = builder.toString();
+            return this.current;
         }
 
         public String getCurrent() {
@@ -58,17 +66,44 @@ public class Paren {
             this.currentList = currentList;
         }
 
-        public void add(int index, int count){
-
-            if(index > currentList.size() || index == 0){
+        public void add(int index, int count, boolean isOutside){
+            System.out.println("currentList before = " + currentList);
+            if(currentList.size() == 0){
                 Parenthesis parenthesis = new Parenthesis();
-                parenthesis.addInside(count);
+                parenthesis.addInside(count - 1);
                 currentList.add(parenthesis);
             }else{
-                Parenthesis prevParen = currentList.get(index);
-                prevParen.addInside(count);
-                currentList.add(index, prevParen);
+
+                Parenthesis prevParen;
+                boolean isNotSet = false;
+                try {
+                    prevParen = currentList.get(index);
+                }catch (IndexOutOfBoundsException ex){
+                    prevParen = new Parenthesis();
+                    isNotSet = true;
+                }
+
+
+                if(isOutside){
+                    prevParen.addOutside(count);
+                }else{
+                    if(prevParen.getCount() == 1){
+                        prevParen.addInside(count - 1);
+                    }else{
+                        prevParen.addInside(count);
+                    }
+
+                }
+
+                if(isNotSet){
+                    currentList.add(index, prevParen);
+                }else{
+                    currentList.set(index, prevParen);
+                }
+
+//                currentList.add(index, prevParen);
             }
+            System.out.println("currentList after = " + currentList);
         }
 
         public ArrayList<Parenthesis> getCurrentList() {
@@ -90,20 +125,20 @@ public class Paren {
 //        parenthesis.addInside(0);
 
         ParenthesisList parenthesisList = new ParenthesisList();
-        System.out.println(getPerms(2, parenthesisList));
+        System.out.println(getPerms(3, parenthesisList));
     }
 
     ParenthesisList getPerms(int count, ParenthesisList list){
         System.out.println("count = " + count);
         if(count == 1){
-            list.add(0, 1);
+//            list.add(0, 1, false);
             return list;
         }
 
         if(count == 2){
-            list.add(0, 1);
-            list.add(0, 1);
-            list.add(1, 2);
+            list.add(0, 1, false);
+            list.add(0, 1, true);
+            list.add(1, 2, false);
             return list;
         }
 
