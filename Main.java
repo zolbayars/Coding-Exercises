@@ -8,8 +8,11 @@ public class Main {
 
         long before = System.currentTimeMillis();
 
-        PermutationsWithDups perms = new PermutationsWithDups();
-        System.out.println(perms.getPermutations("aabc"));
+        Paren paren = new Paren();
+        paren.printAllPerms(3);
+
+//        PermutationsWithDups perms = new PermutationsWithDups();
+//        System.out.println(perms.getPermutations("aabc"));
 
 //        TowersOfHanoi towersOfHanoi = new TowersOfHanoi();
 //        towersOfHanoi.move();
